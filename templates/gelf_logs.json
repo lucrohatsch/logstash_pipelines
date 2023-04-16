@@ -1,0 +1,38 @@
+{
+    "index_patterns": ["infralogs_*"],
+    "template": {
+      "settings": {
+        "number_of_shards": 2,
+        "number_of_replicas": 2,
+        "lifecycle":{
+          "name": "infralogs_autoremove",
+          "rollover_alias": "infralogs"
+          }
+        },
+      "mappings": {
+        "dynamic_templates": [
+          {
+            "string_fields":{
+              "match": "*",
+              "match_mapping_type": "string",
+              "mapping": {
+                "fields": {
+                  "keyword": {
+                    "ignore_above": 1024,
+                    "type": "keyword"
+                    }
+                  }
+                }
+              }
+          }
+        ],
+        "properties": {
+          "@timestamp": {
+            "type": "date"
+            }
+          }
+        }
+      }
+    }
+  
+  
